@@ -35,9 +35,9 @@ public class BeerDto {
         beerDto.setName(beer.getName());
         beerDto.setType(beer.getType());
         beerDto.setDescription(beer.getDescription());
-//        if(Objects.nonNull(beer.getManufacturer())) {
-//            beerDto.setSimpleManufacturerDto(SimpleManufacturerDto.from(beer.getManufacturer()));
-//        }
+        if(Objects.nonNull(beer.getManufacturer())) {
+            beerDto.setSimpleManufacturerDto(SimpleManufacturerDto.from(beer.getManufacturer()));
+        }
 
         return beerDto;
     }

@@ -55,7 +55,7 @@ public class Beer implements Serializable {
     /**
      * Manufacturer of the beer
      */
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne()
     private Manufacturer manufacturer;
 
 
@@ -66,15 +66,15 @@ public class Beer implements Serializable {
         beer.setName(beerDto.getName());
         beer.setDescription(beerDto.getDescription());
         beer.setType(beerDto.getType());
-//        if(Objects.nonNull(beerDto.getSimpleManufacturerDto()))
-//        {
-//            beer.setManufacturer(
-//                    Manufacturer.builder()
-//                    .id(beerDto.getSimpleManufacturerDto().getId())
-//                    .name(beerDto.getSimpleManufacturerDto().getName())
-//                    .nationality(beerDto.getSimpleManufacturerDto().getNationality())
-//            .build());
-//        }
+        if(Objects.nonNull(beerDto.getSimpleManufacturerDto()))
+        {
+            beer.setManufacturer(
+                    Manufacturer.builder()
+                    .id(beerDto.getSimpleManufacturerDto().getId())
+                    .name(beerDto.getSimpleManufacturerDto().getName())
+                    .nationality(beerDto.getSimpleManufacturerDto().getNationality())
+            .build());
+        }
         return beer;
     }
 

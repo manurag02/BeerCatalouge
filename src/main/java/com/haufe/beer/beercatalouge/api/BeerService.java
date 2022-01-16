@@ -1,5 +1,6 @@
 package com.haufe.beer.beercatalouge.api;
 
+import com.haufe.beer.beercatalouge.exceptionhandling.BeerNotFoundException;
 import com.haufe.beer.beercatalouge.model.Beer;
 import io.swagger.models.auth.In;
 
@@ -13,7 +14,7 @@ public interface BeerService {
 
     List<Beer> getAllBeersByType(String type,Integer pageNo, Integer pageSize);
 
-    Beer getBeerByName(String beerName);
+    Beer getBeer(Long id) throws BeerNotFoundException;
 
 
 }

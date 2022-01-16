@@ -69,14 +69,14 @@ public class BeerController {
 
     /**
      * Get Beer by beer name
-     * @param name -  beer from its name
+     * @param id - id of the beer
      * @return the response entity with the list of beers.
      */
-    @GetMapping("/{name}/name")
-    public ResponseEntity<BeerDto> getBeerByName(
-            @PathVariable("name") String name
+    @GetMapping("/{id}")
+    public ResponseEntity<BeerDto> getBeer(
+            @PathVariable("id") Long id
     ) {
-        var beerDto = BeerDto.from(beerService.getBeerByName(name));
+        var beerDto = BeerDto.from(beerService.getBeer(id));
         return new ResponseEntity<>(beerDto, HttpStatus.OK);
     }
 }

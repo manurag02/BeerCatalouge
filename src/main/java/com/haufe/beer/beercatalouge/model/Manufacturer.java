@@ -88,10 +88,10 @@ public class Manufacturer implements Serializable {
         manufacturer.setId(manufacturerDto.getId());
         manufacturer.setName(manufacturerDto.getName());
         manufacturer.setNationality(manufacturerDto.getNationality());
-//        if(Objects.nonNull(manufacturerDto.getBeersDto()))
-//        {
-//            manufacturer.setBeers(manufacturerDto.getBeersDto().stream().map(Beer::from).collect(Collectors.toList()));
-//        }
+        if(Objects.nonNull(manufacturerDto.getBeersDto()))
+        {
+            manufacturer.setBeers(manufacturerDto.getBeersDto().stream().map(Beer::from).collect(Collectors.toList()));
+        }
        return manufacturer;
     }
 

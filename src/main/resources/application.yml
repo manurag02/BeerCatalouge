@@ -24,6 +24,18 @@ spring:
     serialization:
       fail-on-empty-beans: false
 
+constants:
+  error:
+    manufacturerNotFoundException:
+      code: MANUFACTURER_DETAILS_NOT_FOUND
+      message: 'Manufacturer data is not present.'
+    constraintViolationException:
+      code: INVALID_DETAILS
+      message: 'Invalid details provided in the request.'
+    dataIntegrityViolationException:
+      code: DUPLICATE_MANUFACTURER_NAME
+      message: 'Please provide unique Manufacturer name.'
+
 server:
   servlet:
     context-path: /catalogue

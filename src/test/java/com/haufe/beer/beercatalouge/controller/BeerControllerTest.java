@@ -9,6 +9,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import static com.haufe.beer.beercatalouge.utils.BeerTestUtils.beer;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
@@ -48,8 +50,9 @@ public class BeerControllerTest {
 
 
     @Test
-    void shouldReturn200Ok_whenBeerByName() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/beers/kingfisher/name"))
+    void shouldReturn200Ok_whenGetBeerByName() throws Exception {
+        when(beerServiceMock.getBeer(1l)).thenReturn(beer);
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/beers/"+1l))
                 .andExpect(status().isOk());
     }
 

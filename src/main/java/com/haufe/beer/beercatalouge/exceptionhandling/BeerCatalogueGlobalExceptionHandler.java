@@ -2,6 +2,7 @@ package com.haufe.beer.beercatalouge.exceptionhandling;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -22,7 +23,7 @@ public class BeerCatalogueGlobalExceptionHandler  extends ResponseEntityExceptio
     private final ErrorConstants errorConstants;
 
     /**
-     * Handle in valid game id exception response entity.
+     * Handle in valid game id exception response entity. DataIntegrityViolationException
      *
      * @param ex the ex
      * @return the response entity
@@ -35,6 +36,60 @@ public class BeerCatalogueGlobalExceptionHandler  extends ResponseEntityExceptio
 
         log.error("{} :: {}", errorConstants.getConstraintViolationException().getCode(),
                 errorConstants.getConstraintViolationException().getMessage());
+
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+    }
+
+    /**
+     * Handle DataIntegrityViolationException
+     *
+     * @param ex the ex
+     * @return the response entity
+     */
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<Error> handleDataIntegrityViolationException(DataIntegrityViolationException ex) {
+
+
+        Error error = getErrorResponseEntity(errorConstants.getDataIntegrityViolationException(), HttpStatus.BAD_REQUEST, ex);
+
+        log.error("{} :: {}", errorConstants.getDataIntegrityViolationException().getCode(),
+                errorConstants.getDataIntegrityViolationException().getMessage());
+
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+    }
+
+    /**
+     * Handle ManufacturerNotFound Exception
+     *
+     * @param ex the ex
+     * @return the response entity
+     */
+    @ExceptionHandler(ManufacturerNotFoundException.class)
+    public ResponseEntity<Error> handleBeerCatalogueGenericException(ManufacturerNotFoundException ex) {
+
+
+        Error error = getErrorResponseEntity(errorConstants.getManufacturerNotFoundException(), HttpStatus.BAD_REQUEST, ex);
+
+        log.error("{} :: {}", errorConstants.getManufacturerNotFoundException().getCode(),
+                errorConstants.getManufacturerNotFoundException().getMessage());
+
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+    }
+
+    /**
+     * Handle BeerNotFound Exception
+     *
+     * @param ex the ex
+     * @return the response entity
+     */
+    @ExceptionHandler(BeerNotFoundException.class)
+    public ResponseEntity<Error> handleBeerCatalogueGenericException(BeerNotFoundException ex) {
+
+
+        Error error = getErrorResponseEntity(errorConstants.getBeerNotFoundException(), HttpStatus.BAD_REQUEST, ex);
+
+        log.error("{} :: {}", errorConstants.getBeerNotFoundException().getCode(),
+                errorConstants.getBeerNotFoundException().getMessage());
 
         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }

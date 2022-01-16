@@ -9,7 +9,9 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties("constants.error")
 public class ErrorConstants {
 
-    private ErrorAttributes ManufacturerNotFoundException;
+    private ErrorAttributes manufacturerNotFoundException;
+    private ErrorAttributes beerNotFoundException;
     private ErrorAttributes constraintViolationException;
+    private ErrorAttributes dataIntegrityViolationException;
 
 }

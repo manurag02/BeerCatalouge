@@ -1,17 +1,21 @@
 package com.haufe.beer.beercatalouge.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.haufe.beer.beercatalouge.dto.BeerDto;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Objects;
 
+@Entity
+@Table(name = "beers")
 @Data
+@RequiredArgsConstructor
 @AllArgsConstructor
-@NoArgsConstructor
-@Builder(toBuilder = true)
+@JsonIgnoreProperties({"version"})
 public class Beer implements Serializable {
 
     /**
@@ -22,8 +26,12 @@ public class Beer implements Serializable {
     /**
      * The Id of the beer
      */
-    private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    private Long beerId;
 
+    @Version
+    private Long version;
     /**
      * The name of the beer
      */
@@ -47,7 +55,38 @@ public class Beer implements Serializable {
     /**
      * Manufacturer of the beer
      */
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Manufacturer manufacturer;
 
+
+    public static Beer from(BeerDto beerDto)
+    {
+        Beer beer = new Beer();
+        beer.setBeerId(beerDto.getBeerId());
+        beer.setName(beerDto.getName());
+        beer.setDescription(beerDto.getDescription());
+        beer.setType(beerDto.getType());
+//        if(Objects.nonNull(beerDto.getSimpleManufacturerDto()))
+//        {
+//            beer.setManufacturer(
+//                    Manufacturer.builder()
+//                    .id(beerDto.getSimpleManufacturerDto().getId())
+//                    .name(beerDto.getSimpleManufacturerDto().getName())
+//                    .nationality(beerDto.getSimpleManufacturerDto().getNationality())
+//            .build());
+//        }
+        return beer;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Beer )) return false;
+        return beerId != null && beerId.equals(((Beer) o).getBeerId());
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }

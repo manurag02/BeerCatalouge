@@ -1,21 +1,25 @@
 package com.haufe.beer.beercatalouge.controller;
 
 import com.haufe.beer.beercatalouge.api.BeerService;
+import com.haufe.beer.beercatalouge.dto.BeerDto;
 import com.haufe.beer.beercatalouge.model.Beer;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/v1/beers")
 public class BeerController {
 
-    private BeerService beerServiceImpl;
+    private BeerService beerService;
 
-    public BeerController(BeerService beerServiceImpl)
+    public BeerController(BeerService beerService)
     {
-        this.beerServiceImpl = beerServiceImpl;
+        this.beerService = beerService;
     }
 
     /**
@@ -25,11 +29,12 @@ public class BeerController {
      * @return the response entity with List of beers.
      */
     @GetMapping()
-    public List<Beer> getAllBeers(
+    public ResponseEntity<List<BeerDto>> getAllBeers(
             @RequestParam(defaultValue = "0") Integer pageNo,
             @RequestParam(defaultValue = "10") @Valid Integer pageSize
     ) {
-        return beerServiceImpl.getAllBeers(pageNo,pageSize);
+        var beerDtoList = beerService.getAllBeers(pageNo,pageSize).stream().map(BeerDto::from).collect(Collectors.toList());
+        return new ResponseEntity<>(beerDtoList, HttpStatus.OK);
     }
 
     /**
@@ -38,10 +43,13 @@ public class BeerController {
      * @return the response entity with the list of beers.
      */
     @GetMapping("/{manufacturerName}/manufacturer")
-    public List<Beer> getAllBeersByManufacturerName(
-            @PathVariable("manufacturerName") String manufacturerName
+    public ResponseEntity<List<BeerDto>> getAllBeersByManufacturerName(
+            @PathVariable("manufacturerName") String manufacturerName,
+            @RequestParam(defaultValue = "0") Integer pageNo,
+            @RequestParam(defaultValue = "10") @Valid Integer pageSize
     ) {
-        return beerServiceImpl.getAllBeersByManufacturerName(manufacturerName);
+        var beerDtoList =  beerService.getAllBeersByManufacturerName(manufacturerName,pageNo,pageSize).stream().map(BeerDto::from).collect(Collectors.toList());
+        return new ResponseEntity<>(beerDtoList, HttpStatus.OK);
     }
 
     /**
@@ -50,10 +58,13 @@ public class BeerController {
      * @return the response entity with the list of beers.
      */
     @GetMapping("/{type}/type")
-    public List<Beer> getAllBeersByType(
-            @PathVariable("type") String type
+    public ResponseEntity<List<BeerDto>> getAllBeersByType(
+            @PathVariable("type") String type,
+            @RequestParam(defaultValue = "0") Integer pageNo,
+            @RequestParam(defaultValue = "10") @Valid Integer pageSize
     ) {
-        return beerServiceImpl.getAllBeersByType(type);
+        var beerDtoList =  beerService.getAllBeersByType(type,pageNo,pageSize).stream().map(BeerDto::from).collect(Collectors.toList());
+        return new ResponseEntity<>(beerDtoList, HttpStatus.OK);
     }
 
     /**
@@ -62,9 +73,10 @@ public class BeerController {
      * @return the response entity with the list of beers.
      */
     @GetMapping("/{name}/name")
-    public Beer getBeerByName(
+    public ResponseEntity<BeerDto> getBeerByName(
             @PathVariable("name") String name
     ) {
-        return beerServiceImpl.getBeerByName(name);
+        var beerDto = BeerDto.from(beerService.getBeerByName(name));
+        return new ResponseEntity<>(beerDto, HttpStatus.OK);
     }
 }

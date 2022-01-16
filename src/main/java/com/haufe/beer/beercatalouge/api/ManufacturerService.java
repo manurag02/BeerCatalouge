@@ -16,7 +16,9 @@ public interface ManufacturerService {
 
      Manufacturer addBeer(Long manufacturerId, Beer beer) throws ManufacturerNotFoundException;
 
-     Manufacturer getManufacturerByName(String manufacturerName) throws ManufacturerNotFoundException;
+     Manufacturer removeBeer(Long manufacturerId, Beer beer) throws ManufacturerNotFoundException;
+
+     Manufacturer getManufacturer(Long manufacturerId) throws ManufacturerNotFoundException;
 
      String deleteManufacturer(Long manufacturerId) throws ManufacturerNotFoundException;
 

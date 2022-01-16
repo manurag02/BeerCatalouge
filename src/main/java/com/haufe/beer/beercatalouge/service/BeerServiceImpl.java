@@ -15,12 +15,12 @@ public class BeerServiceImpl implements BeerService {
     }
 
     @Override
-    public List<Beer> getAllBeersByManufacturerName(String manufacturerName) {
+    public List<Beer> getAllBeersByManufacturerName(String manufacturerName,Integer pageNo, Integer pageSize ) {
         return null;
     }
 
     @Override
-    public List<Beer> getAllBeersByType(String type) {
+    public List<Beer> getAllBeersByType(String type,Integer pageNo, Integer pageSize) {
         return null;
     }
 

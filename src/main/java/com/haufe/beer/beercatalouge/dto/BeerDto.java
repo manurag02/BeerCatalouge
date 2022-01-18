@@ -25,7 +25,7 @@ public class BeerDto {
 
     private String description;
 
-    private SimpleManufacturerDto simpleManufacturerDto;
+    private SimpleManufacturerDto manufacturer;
 
     public static BeerDto from(Beer beer)
     {
@@ -36,7 +36,7 @@ public class BeerDto {
         beerDto.setType(beer.getType());
         beerDto.setDescription(beer.getDescription());
         if(Objects.nonNull(beer.getManufacturer())) {
-            beerDto.setSimpleManufacturerDto(SimpleManufacturerDto.from(beer.getManufacturer()));
+            beerDto.setManufacturer(SimpleManufacturerDto.from(beer.getManufacturer()));
         }
 
         return beerDto;

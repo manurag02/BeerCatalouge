@@ -27,7 +27,8 @@ public class Beer implements Serializable {
      * The Id of the beer
      */
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(name="BEER_ID", sequenceName = "BEER_ID", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "BEER_ID")
     private Long beerId;
 
     @Version
@@ -55,7 +56,7 @@ public class Beer implements Serializable {
     /**
      * Manufacturer of the beer
      */
-    @ManyToOne()
+    @ManyToOne(fetch = FetchType.LAZY)
     private Manufacturer manufacturer;
 
 
@@ -66,13 +67,13 @@ public class Beer implements Serializable {
         beer.setName(beerDto.getName());
         beer.setDescription(beerDto.getDescription());
         beer.setType(beerDto.getType());
-        if(Objects.nonNull(beerDto.getSimpleManufacturerDto()))
+        if(Objects.nonNull(beerDto.getManufacturer()))
         {
             beer.setManufacturer(
                     Manufacturer.builder()
-                    .id(beerDto.getSimpleManufacturerDto().getId())
-                    .name(beerDto.getSimpleManufacturerDto().getName())
-                    .nationality(beerDto.getSimpleManufacturerDto().getNationality())
+                    .id(beerDto.getManufacturer().getId())
+                    .name(beerDto.getManufacturer().getName())
+                    .nationality(beerDto.getManufacturer().getNationality())
             .build());
         }
         return beer;

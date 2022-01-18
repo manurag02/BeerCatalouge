@@ -29,6 +29,9 @@ constants:
     manufacturerNotFoundException:
       code: MANUFACTURER_DETAILS_NOT_FOUND
       message: 'Manufacturer data is not present.'
+    beerNotFoundException:
+      code: BEER_DETAILS_NOT_FOUND
+      message: 'Beer data is not present.'
     constraintViolationException:
       code: INVALID_DETAILS
       message: 'Invalid details provided in the request.'

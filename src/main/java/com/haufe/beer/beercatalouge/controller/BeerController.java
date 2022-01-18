@@ -37,20 +37,6 @@ public class BeerController {
         return new ResponseEntity<>(beerDtoList, HttpStatus.OK);
     }
 
-    /**
-     * Get Beer list by manufacturer name with  page number and page size (default 0,10)
-     * @param manufacturerName - manufacturerName from which beers to be found
-     * @return the response entity with the list of beers.
-     */
-    @GetMapping("/{manufacturerName}/manufacturer")
-    public ResponseEntity<List<BeerDto>> getAllBeersByManufacturerName(
-            @PathVariable("manufacturerName") String manufacturerName,
-            @RequestParam(defaultValue = "0") Integer pageNo,
-            @RequestParam(defaultValue = "10") @Valid Integer pageSize
-    ) {
-        var beerDtoList =  beerService.getAllBeersByManufacturerName(manufacturerName,pageNo,pageSize).stream().map(BeerDto::from).collect(Collectors.toList());
-        return new ResponseEntity<>(beerDtoList, HttpStatus.OK);
-    }
 
     /**
      * Get Beer list by beer type

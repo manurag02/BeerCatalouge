@@ -84,34 +84,6 @@ public class ManufacturerController {
                 HttpStatus.OK);
     }
 
-//    /**
-//     * Update Manufacturer entity.
-//     * @param beerDto to be added
-//     * @return the response entity with the created manufacturer.
-//     */
-//    @PostMapping(value = "/{manufacturerId}/beers/add", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-//    public ResponseEntity<ManufacturerDto> addBeer(
-//            @PathVariable("manufacturerId") Long manufacturerId,
-//            @RequestBody BeerDto beerDto) {
-//        var manufacturer = manufacturerServiceImpl.addBeer(manufacturerId, Beer.from(beerDto));
-//        return new ResponseEntity<>(ManufacturerDto.from(manufacturer),
-//                HttpStatus.OK);
-//    }
-//
-//    /**
-//     * Update Manufacturer entity.
-//     * @param beerDto to be removed
-//     * @return the response entity with the created manufacturer.
-//     */
-//    @PostMapping(value = "/{manufacturerId}/beers/remove", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-//    public ResponseEntity<ManufacturerDto> removeBeer(
-//            @PathVariable("manufacturerId") Long manufacturerId,
-//            @RequestBody BeerDto beerDto) {
-//        var manufacturer = manufacturerServiceImpl.removeBeer(manufacturerId, Beer.from(beerDto));
-//        return new ResponseEntity<>(ManufacturerDto.from(manufacturer),
-//                HttpStatus.OK);
-//    }
-
 
     /**
      * Delete Manufacturer entity.

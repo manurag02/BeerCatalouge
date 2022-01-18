@@ -1,10 +1,8 @@
 package com.haufe.beer.beercatalouge.service;
 
 import com.haufe.beer.beercatalouge.api.BeerService;
-import com.haufe.beer.beercatalouge.exceptionhandling.BeerCatalogueGenericException;
 import com.haufe.beer.beercatalouge.exceptionhandling.BeerNotFoundException;
 import com.haufe.beer.beercatalouge.model.Beer;
-import com.haufe.beer.beercatalouge.model.Manufacturer;
 import com.haufe.beer.beercatalouge.repository.BeerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -37,10 +35,12 @@ public class BeerServiceImpl implements BeerService {
         return beerList;
     }
 
+
+
     @Override
-    public List<Beer> getAllBeersByManufacturerName(String manufacturerName, Integer pageNo, Integer pageSize) {
+    public List<Beer> getAllBeersByType(String type,Integer pageNo, Integer pageSize) {
         Pageable page = PageRequest.of(pageNo,pageSize);
-        List<Beer> beerList = beerRepository.getBeerByManufacturerName(manufacturerName,page).getContent();
+        List<Beer> beerList = beerRepository.getBeersByType(type,page).getContent();
 
         if(beerList.isEmpty())
         {
@@ -48,12 +48,6 @@ public class BeerServiceImpl implements BeerService {
         }
 
         return beerList;
-    }
-
-
-    @Override
-    public List<Beer> getAllBeersByType(String type,Integer pageNo, Integer pageSize) {
-        return null;
     }
 
     @Override

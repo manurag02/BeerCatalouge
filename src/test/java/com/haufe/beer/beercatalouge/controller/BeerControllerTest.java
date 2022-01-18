@@ -36,11 +36,6 @@ public class BeerControllerTest {
                 .andExpect(status().isOk());
     }
 
-    @Test
-    void shouldReturn200Ok_whenGetAllBeersByManufacturerName() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/beers/UBGroup/manufacturer"))
-                .andExpect(status().isOk());
-    }
 
     @Test
     void shouldReturn200Ok_whenGetAllBeersByType() throws Exception {
@@ -50,7 +45,7 @@ public class BeerControllerTest {
 
 
     @Test
-    void shouldReturn200Ok_whenGetBeerByName() throws Exception {
+    void shouldReturn200Ok_whenGetBeerById() throws Exception {
         when(beerServiceMock.getBeer(1l)).thenReturn(beer);
         mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/beers/"+1l))
                 .andExpect(status().isOk());

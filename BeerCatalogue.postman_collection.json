@@ -1,0 +1,183 @@
+{
+	"info": {
+		"_postman_id": "c806d742-558e-4b68-a0db-81cdfdfaa05e",
+		"name": "BeerCatalogue",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Beer",
+			"item": [
+				{
+					"name": "Get All Beers",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Get Beer by Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/catalogue/api/v1/beers/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"catalogue",
+								"api",
+								"v1",
+								"beers",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Beers By Type",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Manufacturer",
+			"item": [
+				{
+					"name": "ManufacturersList",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/catalogue/api/v1/manufacturers",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"catalogue",
+								"api",
+								"v1",
+								"manufacturers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Manufacturer",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"name\" : \"British Breweries\",\r\n        \"nationality\" : \"British\",\r\n        \"beersDto\": [\r\n            {\r\n                \"name\" : \"London pilsner\",\r\n                \"type\" : \"blonde\",\r\n                \"description\" : \"dfdsf\"\r\n            }\r\n        ]\r\n        \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/catalogue/api/v1/manufacturers",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"catalogue",
+								"api",
+								"v1",
+								"manufacturers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Find Manufacturer by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/catalogue/api/v1/manufacturers/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"catalogue",
+								"api",
+								"v1",
+								"manufacturers",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Manufacturer",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"name\" : \"British Breweries\",\r\n        \"nationality\" : \"British\",\r\n        \"beersDto\": [\r\n            {\r\n                \"name\" : \"London pilsner\",\r\n                \"type\" : \"blonde\",\r\n                \"description\" : \"dfdsf\",\r\n                \"simpleManufacturerDto\" : {\r\n                    \"name\" : \"British Breweries\",\r\n                    \"nationality\" : \"British\"\r\n                }\r\n            }\r\n        ]\r\n        \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/catalogue/api/v1/manufacturers/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"catalogue",
+								"api",
+								"v1",
+								"manufacturers",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Manufacturer",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/catalogue/api/v1/manufacturers/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"catalogue",
+								"api",
+								"v1",
+								"manufacturers",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

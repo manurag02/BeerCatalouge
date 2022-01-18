@@ -63,33 +63,15 @@ public class ManufacturerServiceImpl implements ManufacturerService {
         return updatedManufacturer;
     }
 
-    @Override
-    @Transactional
-    public Manufacturer addBeer(Long manufacturerId, Beer beer) throws ManufacturerNotFoundException {
-        Manufacturer manufacturer = getManufacturer(manufacturerId);
-        Beer beerToBeAdded = beerServiceImpl.getBeer(beer.getBeerId());
-        if(Objects.nonNull(beerToBeAdded.getManufacturer())){
-            throw new BeerAlreadyAddedException();
-        }
-        manufacturer.addBeer(beer);
-        beerToBeAdded.setManufacturer(manufacturer);
-        return manufacturer;
-    }
-
-    @Override
-    public Manufacturer removeBeer(Long manufacturerId, Beer beer) throws ManufacturerNotFoundException {
-        return null;
-    }
-
 
     @Override
     public Manufacturer getManufacturer(Long manufacturerId) throws ManufacturerNotFoundException {
         Manufacturer manufacturer = manufacturerRepository.findById(manufacturerId).orElseThrow(() -> new ManufacturerNotFoundException());
-        var beerList = beerServiceImpl.getAllBeersByManufacturerName(manufacturer.getName(),0,10);
-         for(Beer beer: beerList)
-         {
-             manufacturer.addBeer(beer);
-         }
+//        var beerList = beerServiceImpl.getAllBeersByManufacturerName(manufacturer.getName(),0,10);
+//         for(Beer beer: beerList)
+//         {
+//             manufacturer.addBeer(beer);
+//         }
          return manufacturer;
     }
 

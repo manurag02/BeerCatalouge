@@ -65,19 +65,20 @@ public class BeerServiceImplTest {
                 .isInstanceOf(BeerNotFoundException.class);
     }
 
+
     @Test
-    void shouldGetAllBeers_whenGetBeersByManufacturerName()
+    void shouldGetAllBeers_whenGetBeersByBeerType()
     {
-        when(beerRepositoryMock.getBeerByManufacturerName("UBGroup",testPage)).thenReturn(beerPage);
-        var actualBeerList = beerServiceImplMock.getAllBeersByManufacturerName("UBGroup",0,10);
+        when(beerRepositoryMock.getBeersByType("blonde",testPage)).thenReturn(beerPage);
+        var actualBeerList = beerServiceImplMock.getAllBeersByType("blonde",0,10);
         assertEquals(1,actualBeerList.size());
     }
 
     @Test
-    void shouldThrowBeerCatalogueGenericException_whenGetBeersByManufacturerName()
+    void shouldThrowBeerCatalogueGenericException_whenGetBeersByBeerType()
     {
-        when(beerRepositoryMock.getBeerByManufacturerName("UBSGroup",testPage)).thenReturn( beerPageEmpty);
-        assertThatThrownBy(() -> beerServiceImplMock.getAllBeersByManufacturerName("UBSGroup",0,10))
+        when(beerRepositoryMock.getBeersByType("blonde",testPage)).thenReturn(beerPageEmpty);
+        assertThatThrownBy(() -> beerServiceImplMock.getAllBeersByType("blonde",0,10))
                 .isInstanceOf(BeerNotFoundException.class);
     }
 

@@ -10,9 +10,7 @@ public interface BeerService {
 
     List<Beer> getAllBeers(Integer pageNo, Integer pageSize);
 
-    List<Beer> getAllBeersByManufacturerName(String manufacturerName,Integer pageNo, Integer pageSize);
-
-    List<Beer> getAllBeersByType(String type,Integer pageNo, Integer pageSize);
+    List<Beer> getAllBeersByType(String type, Integer pageNo, Integer pageSize);
 
     Beer getBeer(Long id) throws BeerNotFoundException;
 

@@ -36,7 +36,9 @@ public class Manufacturer implements Serializable {
      * The Id of the manufacturer
      */
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(name = "MANUFACTURER_ID", sequenceName = "MANUFACTURER_ID", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "MANUFACTURER_ID")
+    @Column(name = "MANUFACTURER_ID")
     private Long id;
 
     @Version
@@ -57,7 +59,8 @@ public class Manufacturer implements Serializable {
     /**
      * The beers by manufacturer
      */
-    @OneToMany(mappedBy = "manufacturer", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany( cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "MANUFACTURER_ID")
     private List<Beer> beers = new ArrayList<>();
 
     /**
@@ -72,15 +75,6 @@ public class Manufacturer implements Serializable {
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private ZonedDateTime dateUpdated = ZonedDateTime.now();
 
-    public void addBeer(Beer beer)
-    {
-        beers.add(beer);
-    }
-
-    public void remove(Beer beer)
-    {
-        beers.remove(beer);
-    }
 
     public static Manufacturer from(ManufacturerDto manufacturerDto)
     {

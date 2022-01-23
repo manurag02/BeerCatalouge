@@ -14,3 +14,5 @@ Concepts used :-
 2. Strategy pattern
 3. Builder pattern
 4. Dependency Injection and OOPS concepts as and where required.
+
+NOTE:- This code is meant to be used for local development. For Production profile based parameters will be passed in respective yaml files.

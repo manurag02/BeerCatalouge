@@ -2,8 +2,11 @@ package com.haufe.beer.beercatalouge.controller;
 
 import com.haufe.beer.beercatalouge.api.BeerService;
 import com.haufe.beer.beercatalouge.dto.BeerDto;
+import com.haufe.beer.beercatalouge.dto.ManufacturerDto;
 import com.haufe.beer.beercatalouge.model.Beer;
+import com.haufe.beer.beercatalouge.model.Manufacturer;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -60,9 +63,50 @@ public class BeerController {
      */
     @GetMapping("/{id}")
     public ResponseEntity<BeerDto> getBeer(
-            @PathVariable("id") Long id
+            @PathVariable("id") Integer id
     ) {
         var beerDto = BeerDto.from(beerService.getBeer(id));
         return new ResponseEntity<>(beerDto, HttpStatus.OK);
+    }
+
+    /**
+     * Create Beer entity.
+     * @param beerDto - beer to be created
+     * @return the response entity with the created beer.
+     */
+    @PostMapping( consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<BeerDto> addBeer(
+           @RequestBody BeerDto beerDto) {
+
+        var beer = beerService.addBeer(Beer.from(beerDto));
+        return new ResponseEntity<>(BeerDto.from(beer),
+                HttpStatus.CREATED);
+    }
+
+    /**
+     * Update Beer entity.
+     * @param beerDto - Beer to be created
+     * @return the response entity with the created Beer.
+     */
+    @PutMapping(value = "/{beerId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<BeerDto> updateBeer(
+            @PathVariable("beerId") Integer beerId,
+            @RequestBody BeerDto beerDto) {
+        var beer = beerService.updateBeer(beerId, Beer.from(beerDto));
+        return new ResponseEntity<>(BeerDto.from(beer),
+                HttpStatus.OK);
+    }
+
+    /**
+     * Delete Beer entity.
+     * @param beerId - Beer to be created
+     * @return the response entity with the created Beer.
+     */
+    @DeleteMapping(value = "/{beerId}")
+    public ResponseEntity<String> deleteBeer(
+            @PathVariable("beerId") Integer beerId) {
+        String BeerDeleteMessage = beerService.deleteBeer(beerId);
+        return new ResponseEntity<>(BeerDeleteMessage,
+                HttpStatus.OK);
     }
 }

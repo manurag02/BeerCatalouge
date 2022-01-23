@@ -68,12 +68,12 @@ public class BeerCatalogueGlobalExceptionHandler  extends ResponseEntityExceptio
     public ResponseEntity<Error> handleBeerCatalogueGenericException(ManufacturerNotFoundException ex) {
 
 
-        Error error = getErrorResponseEntity(errorConstants.getManufacturerNotFoundException(), HttpStatus.BAD_REQUEST, ex);
+        Error error = getErrorResponseEntity(errorConstants.getManufacturerNotFoundException(), HttpStatus.NOT_FOUND, ex);
 
         log.error("{} :: {}", errorConstants.getManufacturerNotFoundException().getCode(),
                 errorConstants.getManufacturerNotFoundException().getMessage());
 
-        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }
 
     /**
@@ -86,12 +86,12 @@ public class BeerCatalogueGlobalExceptionHandler  extends ResponseEntityExceptio
     public ResponseEntity<Error> handleBeerCatalogueGenericException(BeerNotFoundException ex) {
 
 
-        Error error = getErrorResponseEntity(errorConstants.getBeerNotFoundException(), HttpStatus.BAD_REQUEST, ex);
+        Error error = getErrorResponseEntity(errorConstants.getBeerNotFoundException(), HttpStatus.NOT_FOUND, ex);
 
         log.error("{} :: {}", errorConstants.getBeerNotFoundException().getCode(),
                 errorConstants.getBeerNotFoundException().getMessage());
 
-        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }
 
     /**

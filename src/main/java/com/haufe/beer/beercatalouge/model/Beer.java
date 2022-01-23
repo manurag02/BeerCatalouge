@@ -1,6 +1,7 @@
 package com.haufe.beer.beercatalouge.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.haufe.beer.beercatalouge.dto.BeerDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -11,7 +12,6 @@ import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
-@Table(name = "beers")
 @Data
 @RequiredArgsConstructor
 @AllArgsConstructor
@@ -27,9 +27,9 @@ public class Beer implements Serializable {
      * The Id of the beer
      */
     @Id
-    @SequenceGenerator(name="BEER_ID", sequenceName = "BEER_ID", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "BEER_ID")
-    private Long beerId;
+//    @SequenceGenerator(name="BEER_ID", sequenceName = "BEER_ID", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
     @Version
     private Long version;
@@ -56,38 +56,43 @@ public class Beer implements Serializable {
     /**
      * Manufacturer of the beer
      */
-    @ManyToOne(fetch = FetchType.LAZY)
+//    @ManyToOne(fetch=FetchType.LAZY , cascade=CascadeType.ALL)
+    @ManyToOne(fetch=FetchType.LAZY , optional = false, cascade=CascadeType.ALL)
+    @JoinColumn(name = "manufacturer_id")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+//    @JsonBackReference
     private Manufacturer manufacturer;
 
 
     public static Beer from(BeerDto beerDto)
     {
         Beer beer = new Beer();
-        beer.setBeerId(beerDto.getBeerId());
+        beer.setId(beerDto.getId());
         beer.setName(beerDto.getName());
         beer.setDescription(beerDto.getDescription());
         beer.setType(beerDto.getType());
+
         if(Objects.nonNull(beerDto.getManufacturer()))
         {
-            beer.setManufacturer(
+//            beer.setManufacturer(beerDto.getManufacturer());
+                        beer.setManufacturer(
                     Manufacturer.builder()
                     .id(beerDto.getManufacturer().getId())
                     .name(beerDto.getManufacturer().getName())
                     .nationality(beerDto.getManufacturer().getNationality())
             .build());
         }
+
         return beer;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Beer )) return false;
-        return beerId != null && beerId.equals(((Beer) o).getBeerId());
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    @Override
-    public int hashCode() {
-        return getClass().hashCode();
+    public Integer getId(Integer id) {
+        return this.id;
     }
+
+
 }

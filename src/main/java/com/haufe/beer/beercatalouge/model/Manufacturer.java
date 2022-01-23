@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
@@ -19,12 +20,11 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Entity
-@Table(name = "manufacturer")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder(toBuilder = true)
-@JsonIgnoreProperties({"dateCreated", "dateUpdated"})
+@JsonIgnoreProperties({"dateCreated", "dateUpdated","version"})
 public class Manufacturer implements Serializable {
 
     /**
@@ -36,31 +36,34 @@ public class Manufacturer implements Serializable {
      * The Id of the manufacturer
      */
     @Id
-    @SequenceGenerator(name = "MANUFACTURER_ID", sequenceName = "MANUFACTURER_ID", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "MANUFACTURER_ID")
-    @Column(name = "MANUFACTURER_ID")
-    private Long id;
+//    @SequenceGenerator(name = "MANUFACTURER_ID", sequenceName = "MANUFACTURER_ID", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @Column(name = "MANUFACTURER_ID")
+    private Integer id;
 
     @Version
-    @JsonIgnore
     private Long version;
 
     /**
      * The name of the manufacturer
      */
-    @Column(unique = true)
+    @NotNull
     private String name;
 
     /**
      * The nationality of the manufacturer
      */
+    @NotNull
     private String nationality;
+
 
     /**
      * The beers by manufacturer
      */
-    @OneToMany( cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "MANUFACTURER_ID")
+//    @OneToMany(mappedBy = "manufacturer")
+    @OneToMany(mappedBy = "manufacturer", cascade = CascadeType.ALL)
+//    @JoinColumn(name = "MANUFACTURER_ID")
+//    @OneToMany( fetch = FetchType.EAGER, targetEntity = Beer.class, mappedBy = "id", cascade = CascadeType.ALL)
     private List<Beer> beers = new ArrayList<>();
 
     /**
@@ -82,11 +85,28 @@ public class Manufacturer implements Serializable {
         manufacturer.setId(manufacturerDto.getId());
         manufacturer.setName(manufacturerDto.getName());
         manufacturer.setNationality(manufacturerDto.getNationality());
-        if(Objects.nonNull(manufacturerDto.getBeersDto()))
+        if(Objects.nonNull(manufacturerDto.getBeers()))
         {
-            manufacturer.setBeers(manufacturerDto.getBeersDto().stream().map(Beer::from).collect(Collectors.toList()));
+            manufacturer.setBeers(manufacturerDto.getBeers().stream().map(Beer::from).collect(Collectors.toList()));
         }
        return manufacturer;
     }
+
+    public void setBeers(List<Beer> beers) {
+        this.beers = beers;
+
+        beers.forEach(t -> t.setManufacturer(this));
+
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Integer getId(Integer id) {
+       return this.id;
+    }
+
+
 
 }

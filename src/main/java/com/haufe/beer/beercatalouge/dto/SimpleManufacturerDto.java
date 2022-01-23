@@ -3,6 +3,7 @@ package com.haufe.beer.beercatalouge.dto;
 import com.haufe.beer.beercatalouge.model.Manufacturer;
 import lombok.Data;
 
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -10,7 +11,8 @@ import java.util.stream.Collectors;
 @Data
 public class SimpleManufacturerDto {
 
-    private Long id;
+    @NotNull(message = "Manufacturer Id should be filled")
+    private Integer id;
     private String name;
     private String nationality;
 

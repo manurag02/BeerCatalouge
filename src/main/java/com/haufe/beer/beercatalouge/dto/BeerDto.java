@@ -1,6 +1,7 @@
 package com.haufe.beer.beercatalouge.dto;
 
 import com.haufe.beer.beercatalouge.model.Beer;
+import com.haufe.beer.beercatalouge.model.Manufacturer;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,7 +16,7 @@ import java.util.Objects;
 public class BeerDto {
 
 
-    private Long beerId;
+    private Integer id;
 
     private String name;
 
@@ -31,7 +32,7 @@ public class BeerDto {
     {
 
         BeerDto beerDto = new BeerDto();
-        beerDto.setBeerId(beer.getBeerId());
+        beerDto.setId(beer.getId());
         beerDto.setName(beer.getName());
         beerDto.setType(beer.getType());
         beerDto.setDescription(beer.getDescription());

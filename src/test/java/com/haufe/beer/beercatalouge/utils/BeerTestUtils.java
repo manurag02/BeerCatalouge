@@ -25,14 +25,14 @@ public class BeerTestUtils {
     public static BeerDto beerDto = new BeerDto();
 
      static {
-         beer.setBeerId(1l);
+         beer.setId(1);
          beer.setName("KingFisher");
          beer.setType("blonde");
          beer.setDescription("7.5% alc");
          beer.setGraduation(" Bottled");
          beer.setManufacturer(manufacturer);
 
-         beerToBeAdded.setBeerId(1l);
+         beerToBeAdded.setId(1);
          beerToBeAdded.setName("KingFisher");
          beerToBeAdded.setType("blonde");
          beerToBeAdded.setDescription("7.5% alc");

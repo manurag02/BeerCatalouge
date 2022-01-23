@@ -24,9 +24,9 @@ public class ManufacturerTestUtils {
 
     public static List<Beer> beerList = new ArrayList<>();
 
-    public static Manufacturer manufacturer = Manufacturer.builder().id(1l).name("UBGroup").nationality("Indian").beers(Collections.emptyList()).build();
+    public static Manufacturer manufacturer = Manufacturer.builder().id(1).name("UBGroup").nationality("Indian").beers(Collections.emptyList()).build();
 
-    public static Manufacturer manufacturerWithBeers = Manufacturer.builder().id(1l).name("UBGroup").nationality("Indian").beers(beerList).build();
+    public static Manufacturer manufacturerWithBeers = Manufacturer.builder().id(1).name("UBGroup").nationality("Indian").beers(beerList).build();
 
     public static ManufacturerDto manufacturerDto = ManufacturerDto.from(manufacturer);
 

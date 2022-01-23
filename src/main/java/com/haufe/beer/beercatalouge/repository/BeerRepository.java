@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface BeerRepository extends JpaRepository<Beer, Long> {
+public interface BeerRepository extends JpaRepository<Beer, Integer> {
 
     @Query("SELECT b FROM Beer b where b.manufacturer.id = ?1")
     Page<Beer> getBeersByManufactureId(Long id, Pageable page);

@@ -1,8 +1,8 @@
 package com.haufe.beer.beercatalouge.api;
 
 import com.haufe.beer.beercatalouge.exceptionhandling.BeerNotFoundException;
+import com.haufe.beer.beercatalouge.exceptionhandling.ManufacturerNotFoundException;
 import com.haufe.beer.beercatalouge.model.Beer;
-import io.swagger.models.auth.In;
 
 import java.util.List;
 
@@ -12,7 +12,13 @@ public interface BeerService {
 
     List<Beer> getAllBeersByType(String type, Integer pageNo, Integer pageSize);
 
-    Beer getBeer(Long id) throws BeerNotFoundException;
+    Beer getBeer(Integer id) throws BeerNotFoundException;
+
+    Beer addBeer(Beer beer);
+
+    Beer updateBeer(Integer beerId, Beer beer) throws BeerNotFoundException, ManufacturerNotFoundException;
+
+    String deleteBeer(Integer beerId) throws BeerNotFoundException;
 
 
 }

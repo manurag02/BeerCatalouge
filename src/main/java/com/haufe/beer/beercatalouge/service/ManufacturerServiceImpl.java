@@ -25,12 +25,10 @@ public class ManufacturerServiceImpl implements ManufacturerService {
 
     private ManufacturerRepository manufacturerRepository;
 
-    private BeerService beerServiceImpl;
 
     @Autowired
-    public ManufacturerServiceImpl(ManufacturerRepository manufacturerRepository, BeerService beerServiceImpl) {
+    public ManufacturerServiceImpl(ManufacturerRepository manufacturerRepository) {
         this.manufacturerRepository = manufacturerRepository;
-        this.beerServiceImpl = beerServiceImpl;
     }
 
     @Override
@@ -49,35 +47,29 @@ public class ManufacturerServiceImpl implements ManufacturerService {
 
     @Override
     public Manufacturer addManufacturer(Manufacturer manufacturer) {
-
         var newManufacturer = manufacturerRepository.save(manufacturer);
         return newManufacturer;
     }
 
     @Override
-    public Manufacturer updateManufacturer(Long manufacturerId, Manufacturer manufacturer) throws ManufacturerNotFoundException {
-        Manufacturer existingManufacturer = getManufacturer(manufacturerId);
-        existingManufacturer.setName(manufacturer.getName());
-        existingManufacturer.setNationality(manufacturer.getNationality());
-        var updatedManufacturer = manufacturerRepository.save(existingManufacturer);
-        return updatedManufacturer;
+    public Manufacturer updateManufacturer(Integer manufacturerId, Manufacturer manufacturer) throws ManufacturerNotFoundException {
+         var existingManufacturer = getManufacturer(manufacturerId);
+         manufacturer.setId(existingManufacturer.getId());
+         manufacturer.getBeers().forEach(t -> t.setManufacturer(existingManufacturer));
+        manufacturerRepository.save(manufacturer);
+        return getManufacturer(manufacturerId);
     }
 
 
     @Override
-    public Manufacturer getManufacturer(Long manufacturerId) throws ManufacturerNotFoundException {
+    public Manufacturer getManufacturer(Integer manufacturerId) throws ManufacturerNotFoundException {
         Manufacturer manufacturer = manufacturerRepository.findById(manufacturerId).orElseThrow(() -> new ManufacturerNotFoundException());
-//        var beerList = beerServiceImpl.getAllBeersByManufacturerName(manufacturer.getName(),0,10);
-//         for(Beer beer: beerList)
-//         {
-//             manufacturer.addBeer(beer);
-//         }
          return manufacturer;
     }
 
 
     @Override
-    public String deleteManufacturer(Long manufacturerId) throws ManufacturerNotFoundException {
+    public String deleteManufacturer(Integer manufacturerId) throws ManufacturerNotFoundException {
         Manufacturer manufacturer = getManufacturer(manufacturerId);
         manufacturerRepository.delete(manufacturer);
         return "Deleted";

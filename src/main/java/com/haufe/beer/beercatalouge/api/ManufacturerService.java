@@ -12,10 +12,10 @@ public interface ManufacturerService {
 
      Manufacturer addManufacturer(Manufacturer manufacturer);
 
-     Manufacturer updateManufacturer(Long manufacturerId, Manufacturer manufacturer) throws ManufacturerNotFoundException;
+     Manufacturer updateManufacturer(Integer manufacturerId, Manufacturer manufacturer) throws ManufacturerNotFoundException;
 
-     Manufacturer getManufacturer(Long manufacturerId) throws ManufacturerNotFoundException;
+     Manufacturer getManufacturer(Integer manufacturerId) throws ManufacturerNotFoundException;
 
-     String deleteManufacturer(Long manufacturerId) throws ManufacturerNotFoundException;
+     String deleteManufacturer(Integer manufacturerId) throws ManufacturerNotFoundException;
 
 }

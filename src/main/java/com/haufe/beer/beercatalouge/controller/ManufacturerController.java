@@ -1,9 +1,8 @@
 package com.haufe.beer.beercatalouge.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.haufe.beer.beercatalouge.api.ManufacturerService;
-import com.haufe.beer.beercatalouge.dto.BeerDto;
 import com.haufe.beer.beercatalouge.dto.ManufacturerDto;
-import com.haufe.beer.beercatalouge.model.Beer;
 import com.haufe.beer.beercatalouge.model.Manufacturer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,10 +20,13 @@ public class ManufacturerController {
 
     private ManufacturerService manufacturerServiceImpl;
 
+    private ObjectMapper objectMapper;
+
     @Autowired
-    public ManufacturerController(ManufacturerService manufacturerServiceImpl)
+    public ManufacturerController(ManufacturerService manufacturerServiceImpl, ObjectMapper objectMapper)
     {
         this.manufacturerServiceImpl = manufacturerServiceImpl;
+        this.objectMapper = objectMapper;
     }
 
     /**
@@ -39,7 +41,7 @@ public class ManufacturerController {
             @RequestParam(defaultValue = "10") @Valid Integer pageSize
     ) {
          var manufacturers = manufacturerServiceImpl.getAllManufacturers(pageNo,pageSize);
-         List<ManufacturerDto> manufacturerDtos = manufacturers.stream().map(ManufacturerDto::from).collect(Collectors.toList());
+         List<ManufacturerDto> manufacturerDtos = manufacturers.stream().map(t -> objectMapper.convertValue(t,ManufacturerDto.class)).collect(Collectors.toList());
         return new ResponseEntity<>(manufacturerDtos, HttpStatus.OK);
     }
 
@@ -50,10 +52,10 @@ public class ManufacturerController {
      */
     @GetMapping("/{manufacturerId}")
     public ResponseEntity<ManufacturerDto> getManufacturer(
-            @PathVariable("manufacturerId") Long manufacturerId
+            @PathVariable("manufacturerId") Integer manufacturerId
     ) {
         var manufacturer = manufacturerServiceImpl.getManufacturer(manufacturerId);
-        return new ResponseEntity<>(ManufacturerDto.from(manufacturer),HttpStatus.OK);
+        return new ResponseEntity<>(objectMapper.convertValue(manufacturer,ManufacturerDto.class),HttpStatus.OK);
     }
 
     /**
@@ -65,8 +67,9 @@ public class ManufacturerController {
     public ResponseEntity<ManufacturerDto> addManufacturer(
             @RequestBody ManufacturerDto manufacturerDto) {
 
-        var manufacturer = manufacturerServiceImpl.addManufacturer(Manufacturer.from(manufacturerDto));
-        return new ResponseEntity<>(ManufacturerDto.from(manufacturer),
+        var manufacturer = objectMapper.convertValue(manufacturerDto, Manufacturer.class);
+         manufacturerServiceImpl.addManufacturer(manufacturer);
+        return new ResponseEntity<>(objectMapper.convertValue(manufacturer,ManufacturerDto.class),
                 HttpStatus.CREATED);
     }
 
@@ -77,10 +80,11 @@ public class ManufacturerController {
      */
     @PutMapping(value = "/{manufacturerId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ManufacturerDto> updateManufacturer(
-            @PathVariable("manufacturerId") Long manufacturerId,
-            @RequestBody ManufacturerDto manufacturerDto) {
-        var manufacturer = manufacturerServiceImpl.updateManufacturer(manufacturerId, Manufacturer.from(manufacturerDto));
-        return new ResponseEntity<>(ManufacturerDto.from(manufacturer),
+            @PathVariable("manufacturerId") Integer manufacturerId,
+             @RequestBody ManufacturerDto manufacturerDto) {
+        var manufacturer = objectMapper.convertValue(manufacturerDto, Manufacturer.class);
+         manufacturerServiceImpl.updateManufacturer(manufacturerId, manufacturer);
+        return new ResponseEntity<>(objectMapper.convertValue(manufacturer,ManufacturerDto.class),
                 HttpStatus.OK);
     }
 
@@ -92,7 +96,7 @@ public class ManufacturerController {
      */
     @DeleteMapping(value = "/{manufacturerId}")
     public ResponseEntity<String> deleteManufacturer(
-            @PathVariable("manufacturerId") Long manufacturerId) {
+            @PathVariable("manufacturerId") Integer manufacturerId) {
         String manufacturerDeleteMessage = manufacturerServiceImpl.deleteManufacturer(manufacturerId);
         return new ResponseEntity<>(manufacturerDeleteMessage,
                 HttpStatus.OK);

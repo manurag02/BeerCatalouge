@@ -6,10 +6,8 @@ Rest Based approach to manage Beers using Spring Boot
 2. Please Use ``mvn spring-boot:run`` to run the application
 3. Please use the postman collection to test this applicaton
 
-Note:- This code is work in progress. Due to personal situation I was not able to finish the following tasks
-1. Sorting
-2. Role based authentication using spring security
-3. Dockerization of the application using docker-compose
+Note:- **This code is work in progress**. Due to personal situation I am not able to finish the following tasks \
+![img.png](img.png)
 
 Concepts used :-
 1. Separation of concerns

@@ -35,13 +35,10 @@ public class ManufacturerServiceImplTest {
     @Mock
     private ManufacturerRepository manufacturerRepositoryMock;
 
-    @Mock
-    private BeerService beerServiceMock;
-
     @BeforeEach
     void setManufacturerService()
     {
-        this.manufacturerService = new ManufacturerServiceImpl(manufacturerRepositoryMock, beerServiceMock);
+        this.manufacturerService = new ManufacturerServiceImpl(manufacturerRepositoryMock);
     }
 
     @Test
@@ -71,59 +68,35 @@ public class ManufacturerServiceImplTest {
     @Test
     void shouldReturnManufacturer_whenGetManufacturerById()
     {
-        when(manufacturerRepositoryMock.findById(1l)).thenReturn(Optional.ofNullable(manufacturer));
-        var manufacturerActual = manufacturerService.getManufacturer(1l);
+        when(manufacturerRepositoryMock.findById(1)).thenReturn(Optional.ofNullable(manufacturer));
+        var manufacturerActual = manufacturerService.getManufacturer(1);
         assertEquals(manufacturer,manufacturerActual);
     }
 
     @Test
     void shouldThrowBeerCatalogueGenericException_whenNoDataFound_forGetManufacturer()
     {
-        when(manufacturerRepositoryMock.findById(1l)).thenReturn(Optional.ofNullable(null));
-        assertThatThrownBy(() -> manufacturerService.getManufacturer(1l))
+        when(manufacturerRepositoryMock.findById(1)).thenReturn(Optional.ofNullable(null));
+        assertThatThrownBy(() -> manufacturerService.getManufacturer(1))
                 .isInstanceOf(ManufacturerNotFoundException.class);
     }
 
     @Test
     void shouldReturnDeleted_whenDeleteManufacturer()
     {
-        when(manufacturerRepositoryMock.findById(1l)).thenReturn(Optional.ofNullable(manufacturer));
-        var deleteMessage = manufacturerService.deleteManufacturer(1l);
+        when(manufacturerRepositoryMock.findById(1)).thenReturn(Optional.ofNullable(manufacturer));
+        var deleteMessage = manufacturerService.deleteManufacturer(1);
         assertEquals("Deleted", deleteMessage);
     }
 
     @Test
     void shouldReturnUpdatedManufacturer_whenUpdateManufacturer()
     {
-        when(manufacturerRepositoryMock.findById(1l)).thenReturn(Optional.ofNullable(manufacturer));
+        when(manufacturerRepositoryMock.findById(1)).thenReturn(Optional.ofNullable(manufacturer));
         when(manufacturerRepositoryMock.save(manufacturer)).thenReturn((manufacturer));
-        var updatedManufacturer = manufacturerService.updateManufacturer(1l,manufacturer);
+        var updatedManufacturer = manufacturerService.updateManufacturer(1,manufacturer);
         assertEquals(manufacturer, updatedManufacturer);
     }
-
-//    @Test
-//    void shouldThrowBeerAlreadyAddedException_whenManufacturerExistsForBeer()
-//    {
-//        when(manufacturerRepositoryMock.findById(1l)).thenReturn(Optional.ofNullable(manufacturer));
-//        when(beerServiceMock.getBeer(1l)).thenReturn(beer);
-//        assertThatThrownBy(() -> manufacturerService.addBeer(1l,beer))
-//                .isInstanceOf(BeerAlreadyAddedException.class);
-//
-//    }
-//
-//    @Test
-//    void shouldAddBeers_whenManufacturerExists()
-//    {
-//        when(manufacturerRepositoryMock.findById(1l)).thenReturn(Optional.ofNullable(manufacturer));
-//        when(beerServiceMock.getBeer(1l)).thenReturn(beerToBeAdded);
-//
-//        var updatedManufacturer = manufacturerService.addBeer(1l,beerToBeAdded);
-//
-//        assertEquals(manufacturerWithBeers, updatedManufacturer);
-//
-//    }
-
-
 
 
 }

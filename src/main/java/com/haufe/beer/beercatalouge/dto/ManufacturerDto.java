@@ -11,10 +11,10 @@ import java.util.stream.Collectors;
 @Data
 public class ManufacturerDto {
 
-    private Long id;
+    private Integer id;
     private String name;
     private String nationality;
-    private List<BeerDto> beersDto = new ArrayList<>();
+    private List<BeerDto> beers = new ArrayList<>();
 
     public static ManufacturerDto from(Manufacturer manufacturer)
     {
@@ -24,7 +24,7 @@ public class ManufacturerDto {
         manufacturerDto.setNationality(manufacturer.getNationality());
         if(Objects.nonNull(manufacturer.getBeers()))
         {
-            manufacturerDto.setBeersDto(manufacturer.getBeers().stream().map(BeerDto::from).collect(Collectors.toList()));
+            manufacturerDto.setBeers(manufacturer.getBeers().stream().map(BeerDto::from).collect(Collectors.toList()));
         }
 
       return manufacturerDto;

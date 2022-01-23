@@ -3,7 +3,6 @@ package com.haufe.beer.beercatalouge.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.haufe.beer.beercatalouge.api.ManufacturerService;
 import com.haufe.beer.beercatalouge.dto.ManufacturerDto;
-import com.haufe.beer.beercatalouge.model.Beer;
 import com.haufe.beer.beercatalouge.model.Manufacturer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -17,8 +16,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import static com.haufe.beer.beercatalouge.utils.BeerTestUtils.beer;
-import static com.haufe.beer.beercatalouge.utils.BeerTestUtils.beerDto;
 import static com.haufe.beer.beercatalouge.utils.ManufacturerTestUtils.manufacturer;
 import static com.haufe.beer.beercatalouge.utils.ManufacturerTestUtils.manufacturerDto;
 import static org.mockito.Mockito.when;
@@ -40,7 +37,7 @@ public class ManufacturerControllerTest {
     @BeforeEach
     public void setMockMvc()
     {
-        this.manufacturerController = new ManufacturerController(manufacturerServiceMock);
+        this.manufacturerController = new ManufacturerController(manufacturerServiceMock, objectMapper);
         this.mockMvc = MockMvcBuilders.standaloneSetup(manufacturerController).build();
     }
 
@@ -52,7 +49,7 @@ public class ManufacturerControllerTest {
 
     @Test
     void shouldReturn200Ok_whenGetManufacturer() throws Exception {
-        when(manufacturerServiceMock.getManufacturer(1l)).thenReturn(manufacturer);
+        when(manufacturerServiceMock.getManufacturer(1)).thenReturn(manufacturer);
         mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/manufacturers/1"))
                 .andExpect(status().isOk());
     }
@@ -71,7 +68,7 @@ public class ManufacturerControllerTest {
 
     @Test
     void shouldReturn200Ok_whenUpdateManufacturer() throws Exception {
-        when(manufacturerServiceMock.updateManufacturer(1l,Manufacturer.from(manufacturerDto))).thenReturn(manufacturer);
+        when(manufacturerServiceMock.updateManufacturer(1,Manufacturer.from(manufacturerDto))).thenReturn(manufacturer);
         try (MockedStatic<ManufacturerDto> utilities = Mockito.mockStatic(ManufacturerDto.class)) {
             utilities.when(() -> ManufacturerDto.from(manufacturer)).thenReturn(manufacturerDto);
             mockMvc.perform(MockMvcRequestBuilders.put("/api/v1/manufacturers/1")
@@ -81,33 +78,10 @@ public class ManufacturerControllerTest {
         }
     }
 
-//    @Test
-//    void shouldReturn200Ok_whenAddManufacturerBeers() throws Exception {
-//        when(manufacturerServiceMock.addBeer(1l, Beer.from(beerDto))).thenReturn(manufacturer);
-//        try (MockedStatic<ManufacturerDto> utilities = Mockito.mockStatic(ManufacturerDto.class)) {
-//            utilities.when(() -> ManufacturerDto.from(manufacturer)).thenReturn(manufacturerDto);
-//            mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/manufacturers/1/beers/add")
-//                            .contentType(MediaType.APPLICATION_JSON)
-//                            .content(objectMapper.writeValueAsString(beer)))
-//                    .andExpect(status().is2xxSuccessful());
-//        }
-//    }
-//
-//    @Test
-//    void shouldReturn200Ok_whenRemoveManufacturerBeers() throws Exception {
-//        when(manufacturerServiceMock.removeBeer(1l, Beer.from(beerDto))).thenReturn(manufacturer);
-//        try (MockedStatic<ManufacturerDto> utilities = Mockito.mockStatic(ManufacturerDto.class)) {
-//            utilities.when(() -> ManufacturerDto.from(manufacturer)).thenReturn(manufacturerDto);
-//            mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/manufacturers/1/beers/remove")
-//                            .contentType(MediaType.APPLICATION_JSON)
-//                            .content(objectMapper.writeValueAsString(beer)))
-//                    .andExpect(status().is2xxSuccessful());
-//        }
-//    }
 
     @Test
     void shouldReturn200Ok_whenDeleteManufacturer() throws Exception {
-        when(manufacturerServiceMock.deleteManufacturer(1l)).thenReturn("Deleted");
+        when(manufacturerServiceMock.deleteManufacturer(1)).thenReturn("Deleted");
         mockMvc.perform(MockMvcRequestBuilders.delete("/api/v1/manufacturers/1"))
                 .andExpect(status().is2xxSuccessful());
 

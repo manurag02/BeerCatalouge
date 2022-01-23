@@ -12,7 +12,20 @@
 					"name": "Get All Beers",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/catalogue/api/v1/beers",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"catalogue",
+								"api",
+								"v1",
+								"beers"
+							]
+						}
 					},
 					"response": []
 				},
@@ -42,7 +55,83 @@
 					"name": "Get All Beers By Type",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/catalogue/api/v1/beers/blonde/type",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"catalogue",
+								"api",
+								"v1",
+								"beers",
+								"blonde",
+								"type"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Beers",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n         \r\n            \"name\": \"London pilsner\",\r\n            \"graduation\": null,\r\n            \"type\": \"ale\",\r\n            \"description\": \"dfdsf\",\r\n            \"manufacturer\": {\r\n            \"id\": 1,\r\n            \"name\": \"British Breweries gfg\",\r\n            \"nationality\": \"British\"\r\n        }\r\n        }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/catalogue/api/v1/beers",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"catalogue",
+								"api",
+								"v1",
+								"beers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Beer",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"id\": 1,\r\n        \"name\": \"London pilsner strong\",\r\n        \"graduation\": null,\r\n        \"type\": \"blonde\",\r\n        \"description\": \"dfdsf\",\r\n        \"manufacturer\": {\r\n            \"id\": 1,\r\n            \"name\": \"British Breweries gfg\",\r\n            \"nationality\": \"British\"\r\n        }\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/catalogue/api/v1/beers/3",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"catalogue",
+								"api",
+								"v1",
+								"beers",
+								"3"
+							]
+						}
 					},
 					"response": []
 				}
@@ -79,7 +168,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n        \"name\" : \"British Breweries\",\r\n        \"nationality\" : \"British\",\r\n        \"beersDto\": [\r\n            {\r\n                \"name\" : \"London pilsner\",\r\n                \"type\" : \"blonde\",\r\n                \"description\" : \"dfdsf\"\r\n            }\r\n        ]\r\n        \r\n}",
+							"raw": "{\r\n    \"name\": \"British Breweries gfg\",\r\n    \"nationality\": \"British\",\r\n    \"beers\": [\r\n        {\r\n            \"name\": \"London pilsner\",\r\n            \"type\": \"blonde\",\r\n            \"description\": \"dfdsf\"\r\n        }\r\n    ]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -131,7 +220,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n        \"name\" : \"British Breweries\",\r\n        \"nationality\" : \"British\",\r\n        \"beersDto\": [\r\n            {\r\n                \"name\" : \"London pilsner\",\r\n                \"type\" : \"blonde\",\r\n                \"description\" : \"dfdsf\",\r\n                \"simpleManufacturerDto\" : {\r\n                    \"name\" : \"British Breweries\",\r\n                    \"nationality\" : \"British\"\r\n                }\r\n            }\r\n        ]\r\n        \r\n}",
+							"raw": "{\r\n        \"id\": 1,\r\n        \"name\": \"British Breweries gfg\",\r\n        \"nationality\": \"British\",\r\n        \"beers\": [\r\n            {\r\n                \"id\": 1,\r\n                \"name\": \"London pilsner\",\r\n                \"graduation\": null,\r\n                \"type\": \"blonde\",\r\n                \"description\": \"dfdsf\",\r\n                \"manufacturer\": null\r\n            },\r\n            {\r\n                \"id\": 1,\r\n                \"name\": \"London pilsner\",\r\n                \"graduation\": null,\r\n                \"type\": \"triple\",\r\n                \"description\": \"dfdsf\",\r\n                \"manufacturer\": null\r\n            }\r\n        ]\r\n    }",
 							"options": {
 								"raw": {
 									"language": "json"

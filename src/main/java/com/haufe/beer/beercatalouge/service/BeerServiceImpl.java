@@ -64,9 +64,16 @@ public class BeerServiceImpl implements BeerService {
     }
 
     @Override
+    @Transactional
     public Beer addBeer(Beer beer) {
-        var addedBeer = beerRepository.save(beer);
-        return addedBeer;
+
+        Optional<Manufacturer> existingManufacturer = manufacturerRepository.findById(beer.getManufacturer().getId());
+        if(!existingManufacturer.isPresent())
+        {
+            throw new ManufacturerNotFoundException();
+        }
+        beer.setManufacturer(existingManufacturer.get());
+        return beerRepository.save(beer);
     }
 
     @Override
@@ -79,10 +86,11 @@ public class BeerServiceImpl implements BeerService {
             throw new ManufacturerNotFoundException();
         }
         var existingBeer = getBeer(beerId);
-        beer.setId(existingBeer.getId());
-        beer.setManufacturer(existingManufacturer.get());
-
-        return beerRepository.save(beer);
+        existingBeer.setType(beer.getType());
+        existingBeer.setDescription(beer.getDescription());
+        existingBeer.setGraduation(beer.getGraduation());
+        existingBeer.setManufacturer(existingManufacturer.get());
+        return beerRepository.save(existingBeer);
     }
 
     @Override

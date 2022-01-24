@@ -1,8 +1,6 @@
 package com.haufe.beer.beercatalouge.service;
 
 import com.haufe.beer.beercatalouge.api.BeerService;
-import com.haufe.beer.beercatalouge.api.ManufacturerService;
-import com.haufe.beer.beercatalouge.exceptionhandling.BeerCatalogueGenericException;
 import com.haufe.beer.beercatalouge.exceptionhandling.BeerNotFoundException;
 import com.haufe.beer.beercatalouge.repository.BeerRepository;
 import com.haufe.beer.beercatalouge.repository.ManufacturerRepository;
@@ -15,8 +13,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.Optional;
 
 import static com.haufe.beer.beercatalouge.utils.BeerTestUtils.*;
-import static com.haufe.beer.beercatalouge.utils.ManufacturerTestUtils.manufacturer;
-import static com.haufe.beer.beercatalouge.utils.ManufacturerTestUtils.testPage;
+import static com.haufe.beer.beercatalouge.utils.ManufacturerTestUtils.*;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
@@ -91,6 +88,7 @@ public class BeerServiceImplTest {
     @Test
     void shouldCreateBeer_whenAddManufacturer()
     {
+        when(manufacturerRepositoryMock.findById(1)).thenReturn(Optional.ofNullable(manufacturerWithBeers));
         when(beerRepositoryMock.save(beer)).thenReturn(beer);
         var actualBeer = beerServiceImplMock.addBeer(beer);
         assertEquals(beer,actualBeer);

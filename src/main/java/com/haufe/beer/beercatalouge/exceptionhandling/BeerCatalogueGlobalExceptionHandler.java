@@ -23,12 +23,13 @@ public class BeerCatalogueGlobalExceptionHandler  extends ResponseEntityExceptio
     private final ErrorConstants errorConstants;
 
     /**
+     *
      * Handle in valid game id exception response entity. DataIntegrityViolationException
      *
      * @param ex the ex
      * @return the response entity
      */
-    @ExceptionHandler(ConstraintViolationException.class)
+    @ExceptionHandler({ConstraintViolationException.class})
     public ResponseEntity<Error> handleConstraintViolationException(ConstraintViolationException ex) {
 
 
@@ -54,6 +55,24 @@ public class BeerCatalogueGlobalExceptionHandler  extends ResponseEntityExceptio
 
         log.error("{} :: {}", errorConstants.getDataIntegrityViolationException().getCode(),
                 errorConstants.getDataIntegrityViolationException().getMessage());
+
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+    }
+
+    /**
+     * Handle IllegalArgumentException.class
+     *
+     * @param ex the ex
+     * @return the response entity
+     */
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<Error> handleDataIntegrityViolationException(IllegalArgumentException ex) {
+
+
+        Error error = getErrorResponseEntity(errorConstants.getConstraintViolationException(), HttpStatus.BAD_REQUEST, ex);
+
+        log.error("{} :: {}", errorConstants.getConstraintViolationException().getCode(),
+                errorConstants.getConstraintViolationException().getMessage());
 
         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }

@@ -1,24 +1,16 @@
 package com.haufe.beer.beercatalouge.service;
 
-import com.haufe.beer.beercatalouge.api.BeerService;
 import com.haufe.beer.beercatalouge.api.ManufacturerService;
-import com.haufe.beer.beercatalouge.exceptionhandling.BeerAlreadyAddedException;
-import com.haufe.beer.beercatalouge.exceptionhandling.BeerCatalogueGenericException;
 import com.haufe.beer.beercatalouge.exceptionhandling.ManufacturerNotFoundException;
-import com.haufe.beer.beercatalouge.model.Beer;
 import com.haufe.beer.beercatalouge.model.Manufacturer;
-import com.haufe.beer.beercatalouge.repository.BeerRepository;
 import com.haufe.beer.beercatalouge.repository.ManufacturerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
 
 @Service
 public class ManufacturerServiceImpl implements ManufacturerService {
@@ -46,18 +38,21 @@ public class ManufacturerServiceImpl implements ManufacturerService {
     }
 
     @Override
+    @Transactional
     public Manufacturer addManufacturer(Manufacturer manufacturer) {
         var newManufacturer = manufacturerRepository.save(manufacturer);
         return newManufacturer;
     }
 
     @Override
+    @Transactional
     public Manufacturer updateManufacturer(Integer manufacturerId, Manufacturer manufacturer) throws ManufacturerNotFoundException {
          var existingManufacturer = getManufacturer(manufacturerId);
-         manufacturer.setId(existingManufacturer.getId());
+         existingManufacturer.setName(manufacturer.getName());
+         existingManufacturer.setNationality(manufacturer.getNationality());
          manufacturer.getBeers().forEach(t -> t.setManufacturer(existingManufacturer));
-        manufacturerRepository.save(manufacturer);
-        return getManufacturer(manufacturerId);
+         existingManufacturer.setBeers(manufacturer.getBeers());
+        return manufacturerRepository.save(existingManufacturer);
     }
 
 

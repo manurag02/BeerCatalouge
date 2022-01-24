@@ -1,25 +1,16 @@
 package com.haufe.beer.beercatalouge.service;
 
-import com.haufe.beer.beercatalouge.api.BeerService;
 import com.haufe.beer.beercatalouge.api.ManufacturerService;
-import com.haufe.beer.beercatalouge.exceptionhandling.BeerAlreadyAddedException;
-import com.haufe.beer.beercatalouge.exceptionhandling.BeerCatalogueGenericException;
 import com.haufe.beer.beercatalouge.exceptionhandling.ManufacturerNotFoundException;
-import com.haufe.beer.beercatalouge.model.Manufacturer;
-import com.haufe.beer.beercatalouge.repository.BeerRepository;
 import com.haufe.beer.beercatalouge.repository.ManufacturerRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.data.domain.Page;
 
 import java.util.Optional;
 
-import static com.haufe.beer.beercatalouge.utils.BeerTestUtils.beer;
-import static com.haufe.beer.beercatalouge.utils.BeerTestUtils.beerToBeAdded;
 import static com.haufe.beer.beercatalouge.utils.ManufacturerTestUtils.*;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertEquals;

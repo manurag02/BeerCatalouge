@@ -1,7 +1,6 @@
 package com.haufe.beer.beercatalouge.api;
 
 import com.haufe.beer.beercatalouge.exceptionhandling.ManufacturerNotFoundException;
-import com.haufe.beer.beercatalouge.model.Beer;
 import com.haufe.beer.beercatalouge.model.Manufacturer;
 
 import java.util.List;
